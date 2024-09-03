@@ -1,25 +1,20 @@
 package com.ust.fetchdatafromapi.service;
 
-import com.ust.fetchdatafromapi.response.SearchByMeal;
+import com.ust.fetchdatafromapi.forecast.WeatherData;
 import lombok.RequiredArgsConstructor;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestClient;
-
-import static org.springframework.http.MediaType.APPLICATION_JSON;
-
 @Service
 @RequiredArgsConstructor
 public class ApiCallerService {
 
     private final RestClient restClient;
 
-    // https://www.themealdb.com/api/json/v1/1/search.php?s=chicken
-    public SearchByMeal searchMealByName(String meal) {
+    //https://api.open-meteo.com/v1/forecast?latitude=52.52&longitude=13.41&hourly=temperature_2m
+    public WeatherData getWeatherData(double latitude, double longitude, String hourly) {
         return restClient.get()
-                .uri("/search.php?s={meal}", meal)
+                .uri("/forecast?latitude={latitude}&longitude={longitude}&hourly={hourly}",latitude,longitude,hourly)
                 .retrieve()
-                .body(SearchByMeal.class);
+                .body(WeatherData.class);
     }
-
 }
