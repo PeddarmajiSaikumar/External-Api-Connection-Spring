@@ -1,4 +1,6 @@
 package com.ust.fetchdatafromapi.response;
 
-public record SearchByMeal() {
+import java.util.List;
+
+public record SearchByMeal(List<Meal> meals)  {
 }
